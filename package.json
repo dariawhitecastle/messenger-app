@@ -1,0 +1,30 @@
+{
+  "name": "messenger-app",
+  "version": "1.0.0",
+  "description": "Messenger API for a web app to enable chat between two users",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dariawhitecastle/messenger-app.git"
+  },
+  "keywords": [
+    "sockets"
+  ],
+  "author": "Daria Calwell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dariawhitecastle/messenger-app/issues"
+  },
+  "homepage": "https://github.com/dariawhitecastle/messenger-app#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.7",
+    "socket.io": "^3.1.1"
+  }
+}
