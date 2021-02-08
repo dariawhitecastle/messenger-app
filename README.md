@@ -31,6 +31,8 @@ yarn docker
 
 App is now running on port 8081. A minimally styled UI can be viewed and
 interacted with for testing purposes.
+- Open two browser tabs
+- Intereact with the app to view the features 
 
 ## test the app
 
