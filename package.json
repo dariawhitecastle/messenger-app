@@ -4,9 +4,10 @@
   "description": "Messenger API for a web app to enable chat between two users",
   "main": "index.js",
   "scripts": {
-    "test": "jest index.test.js",
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "test": "jest src/index.test.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "docker-run": "docker run -p 8081:8080 daria.calwell/messenger-app",
     "docker": "docker build -t daria.calwell/messenger-app . && docker run -p 8081:8080 -d daria.calwell/messenger-app",
     "docker-test": "docker run daria.calwell/messenger-app sh -c \"yarn test\""
   },

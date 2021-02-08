@@ -6,7 +6,7 @@ server.listen(port);
 
 // routing
 app.get('/', (req, res) => {
-  res.sendFile('public/index.html', { root: __dirname });
+  res.sendFile('/public/index.html', { root: __dirname });
 });
 
 app.get('/get-messages/:senderId?', (req, res) => {
@@ -80,6 +80,6 @@ io.on('connection', (socket) => {
   });
 });
 
-console.log('Server running on port 8080');
+console.log('Server is running on port 8081');
 
 module.exports = { ioServer: io, allMessages, allUsers };
