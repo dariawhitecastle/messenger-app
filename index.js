@@ -18,31 +18,40 @@ let allUsers = [];
 
 io.on('connection', (socket) => {
   // on initial connection
-  socket.emit('chat_started', console.log({ allMessages }));
+  socket.emit('chat_started', 'New Chat');
 
   // on new user joining
   socket.on('new_user', (name) => {
-    let newUser = { id: allUsers.length + 1, name };
+    let newUser = { id: socket.id, name };
     allUsers.push(newUser);
-    if (allUsers.length === 2) {
-      socket.emit('limit_met');
-    }
   });
 
   // on user sending a message
-  socket.on('new_message', ({ sender, receiver, message }) => {
-    allMessages.push({ sender, receiver, message, date: new Date() });
+  socket.on('new_message', ({ receiverId, message }) => {
+    allMessages.push({
+      senderId: socket.id,
+      receiverId,
+      message,
+      date: new Date(),
+    });
   });
 
   // on message retrieve request
-  socket.on('get_messages', (senderId, receiverId) => {
-    const filteredMessages = allMessages.filter(
-      (message) =>
-        message.senderId === senderId &&
-        message.receiverId === receiverId &&
-        filterLastMonth(message)
-    );
-    return filteredMessages.slice(0, 100);
+  socket.on('get_messages', (senderId) => {
+    if (!senderId) {
+      socket.emit(
+        'send_messages',
+        allMessages.filter(filterLastMonth).slice(0, 100)
+      );
+    } else {
+      const filteredMessages = allMessages.filter(
+        (message) =>
+          message.senderId === senderId &&
+          message.receiverId === socket.id &&
+          filterLastMonth(message)
+      );
+      socket.emit('send_messages', filteredMessages.slice(0, 100));
+    }
   });
 });
 
@@ -52,3 +61,5 @@ io.on('disconnect', () => {
 });
 
 console.log('Server running on port 8080');
+
+module.exports = { ioServer: io, allMessages, allUsers };
