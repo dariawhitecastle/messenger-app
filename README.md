@@ -10,7 +10,7 @@ Messenger API for a web app to enable chat
 - A user can submit a short message.
 - Once the message is submitted, all users currently in the room can see it.
 - All messages can be retrieved for a specific sender by calling the endpoint
-  /all-messages.
+  /get-messages.
 - If no parameter is provided, all messages for the last 30 days are retrieved
 - If optional senderId is provided, messages for the current user from sender,
   will be retrieved.
