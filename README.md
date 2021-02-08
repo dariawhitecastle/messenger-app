@@ -1,6 +1,6 @@
 # messenger-app
 
-Messenger API for a web app to enable chat between two users
+Messenger API for a web app to enable chat
 
 ## App features
 
@@ -10,13 +10,19 @@ Messenger API for a web app to enable chat between two users
 - A user can submit a short message.
 - Once the message is submitted, all users currently in the room can see it.
 - All messages can be retrieved for a specific sender by calling the endpoint
-  /all-messages
+  /all-messages.
 - If no parameter is provided, all messages for the last 30 days are retrieved
 - If optional senderId is provided, messages for the current user from sender,
-  will be retrieved
+  will be retrieved.
 - Messages are sent for the last 30 days or the first 100.
 
+## Known limitations
+
+- No database is connected to the current app, so all session data is cleared out on app close/UI refresh/socket disconnect.
+- For the reason above it isn't possible to test filtering of real messages for the last 30 days.
+
 ## Technologies used for the app
+
 - Node.js v.14  - JS runtime env https://nodejs.org/en/
 - Socket.io - Server and Client (for testing) WebSockets https://socket.io/
 - Express - Node.js Framework https://expressjs.com/
@@ -30,7 +36,7 @@ yarn docker
 ```
 
 App is now running on port 8081. A minimally styled UI can be viewed and
-interacted with for testing purposes.
+interacted with for testing purposes on port 8081.
 - Open two browser tabs
 - Intereact with the app to view the features 
 
@@ -44,19 +50,24 @@ This will run `yarn test` inside a docker container and you can see passing
 tests
 
 ## Scripts available
+run container if built previously
+
 ```
 yarn docker-run
 ```
-run container if built previously
+run tests outside docker
+
 ```
 yarn test
 ```
-run tests outside docker
+run dev server
+
 ```
 yarn dev
 ```
-run dev server
+start the IO server
+
 ```
 yarn start
 ```
-start the IO server
+
