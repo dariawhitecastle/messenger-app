@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest index.test.js",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "docker": "docker build -t daria.calwell/messenger-app . && docker run -p 8081:8080 -d daria.calwell/messenger-app",
+    "docker-test": "docker run daria.calwell/messenger-app sh -c \"yarn test\""
   },
   "repository": {
     "type": "git",

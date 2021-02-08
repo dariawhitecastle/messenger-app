@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Messenger App</title>
+</head>
+
+<body>
+    <h1 id='header'>Messenger App</h1>
+    <form>
+        <div>
+            <label>Name</label>
+            <input type="text" id="input">
+            <button type="submit" id="submit">submit</button>
+        </div>
+    </form>
+    <ul id="messages"></ul>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const $messages = document.getElementById('messages');
+        const $header = document.getElementById('header');
+        const $submit = document.getElementById('submit');
+        const $input = document.getElementById('input');
+        const $form = document.querySelector('form')
+        const $label = document.querySelector('label')
+
+        const newItem = (content, type) => {
+            const item = document.createElement(type);
+            item.innerText = content;
+            return item;
+        };
+
+        const socket = io();
+
+        socket.on('chat_started', (allUsers) => {
+            if (allUsers.length) {
+                allUsers.map(user => 
+                    $header.appendChild(newItem(`${user.name} joined`, 'h6'))
+                )
+            }
+        });
+
+        socket.on('new_user', (user) => {
+           $header.appendChild(newItem(`${user.name} joined`, 'h6'))
+        })
+      
+
+        socket.on('new_message', (newMess) => {
+            $messages.appendChild(newItem(`User: ${newMess}`, 'li'))
+        })
+
+        $submit.addEventListener('click', (e) => {
+            e.preventDefault()
+            if ($label.innerText.trim() === 'Name') {
+                $header.appendChild(newItem(`${$input.value} joined`, 'h6'));
+                socket.emit('new_user', $input.value);
+                $label.textContent = 'Message'
+            } else {
+                socket.emit('new_message', { userId: 1, message: $input.value })
+                $messages.appendChild(newItem(`You: ${$input.value}`, 'li'))
+            }
+            $form.reset()
+
+        })
+
+
+    </script>
+</body>
+</body>
+
+</html>
