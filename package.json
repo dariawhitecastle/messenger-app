@@ -7,8 +7,8 @@
     "test": "jest src/index.test.js",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "docker-run": "docker run -p 8081:8080 daria.calwell/messenger-app",
-    "docker": "docker build -t daria.calwell/messenger-app . && docker run -p 8081:8080 -d daria.calwell/messenger-app",
+    "docker-run": "docker run -p 8081:8080 -d daria.calwell/messenger-app",
+    "docker": "docker build -t daria.calwell/messenger-app . && yarn docker-run",
     "docker-test": "docker run daria.calwell/messenger-app sh -c \"yarn test\""
   },
   "repository": {
