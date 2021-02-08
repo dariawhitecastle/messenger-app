@@ -58,7 +58,7 @@
                 socket.emit('new_user', $input.value);
                 $label.textContent = 'Message'
             } else {
-                socket.emit('new_message', { userId: 1, message: $input.value })
+                socket.emit('new_message', $input.value )
                 $messages.appendChild(newItem(`You: ${$input.value}`, 'li'))
             }
             $form.reset()

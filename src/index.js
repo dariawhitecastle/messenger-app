@@ -15,9 +15,7 @@ app.get('/get-messages/:senderId?', (req, res) => {
   } else {
     const filteredMessages = allMessages.filter(
       (message) =>
-        message.senderId === req.params.senderId &&
-        message.receiverId === socket.id &&
-        filterLastMonth(message)
+        message.senderId === req.params.senderId && filterLastMonth(message)
     );
     res.send(filteredMessages.slice(0, 100));
   }
@@ -47,7 +45,9 @@ io.on('connection', (socket) => {
   });
 
   // on user sending a message
-  socket.on('new_message', ({ receiverId, message }) => {
+  socket.on('new_message', (message) => {
+    const receiver = allUsers.find((user) => user.id !== socket.id);
+    const receiverId = receiver ? receiver.id : socket.id;
     allMessages.push({
       senderId: socket.id,
       receiverId,
@@ -66,10 +66,7 @@ io.on('connection', (socket) => {
       );
     } else {
       const filteredMessages = allMessages.filter(
-        (message) =>
-          message.senderId === senderId &&
-          message.receiverId === socket.id &&
-          filterLastMonth(message)
+        (message) => message.senderId === senderId && filterLastMonth(message)
       );
       socket.emit('send_messages', filteredMessages.slice(0, 100));
     }
